@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel {
+  position: relative;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.carousel-images {
+  display: flex;
+}
+
+.carousel-images img {
+  display: flex;
+  width: 500px;
+}
+
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translate();
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}

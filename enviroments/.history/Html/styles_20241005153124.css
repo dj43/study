@@ -1,0 +1,15 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel {
+  position: relative;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.carousel-images {
+  display: flex;
+}

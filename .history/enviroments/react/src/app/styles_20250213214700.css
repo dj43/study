@@ -1,0 +1,7 @@
+/* mouse follow*/
+.fullscreen {
+  height: 100vh;
+  width: 100vh;
+  border: 1px solid blue;
+  background-color: red;
+}
