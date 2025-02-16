@@ -8,14 +8,19 @@
 
 # testing
 /coverage
-
+.history
+enviroments/react1/.next
+enviroments/react1/.history
+enviroments/.history/Html
+enviroments/react1/node_modules
 # next.js
 /.next/
 /out/
-
+new
+new.pub
 # production
 /build
-
+.gitignore
 # misc
 .DS_Store
 *.pem
@@ -34,3 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.gitignore
