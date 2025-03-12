@@ -1,23 +1,65 @@
 // of(...) → Emits provided values in sequence.
 of(1, 2, 3).subscribe(console.log); // 1, 2, 3
 
-// map(x => y) → Transforms values emitted by an Observable.
-of(2, 4, 6)
-  .pipe(map((x) => x * 2))
-  .subscribe(console.log); // 4, 8, 12
+// 1. Map → Fetch users and return only names atrribute
+// getUserNames(): Observable<string[]> {
+//   return this.http.get<any[]>(`${this.API_URL}/users`).pipe(
+//     map(users => users.map(user => user.name))
+//   );
+// }
 
-// filter(predicate) → Emits only values that pass a condition.
-of(1, 2, 3, 4)
-  .pipe(filter((x) => x % 2 === 0))
-  .subscribe(console.log); // 2, 4
+// 2. Filter → Fetch users and return those whose name starts with 'C'
+// getFilteredUsers(): Observable<any[]> {
+//   return this.http.get<any[]>(`${this.API_URL}/users`).pipe(
+//     map(users => users.filter(user => user.name.startsWith('C')))
+//   );
+// }
 
-// take(n) → Takes the first n values and completes.
+// 3. Take → Fetch posts but only take the first 3
+// getLimitedPosts(): Observable<any[]> {
+//   return this.http.get<any[]>(`${this.API_URL}/posts`).pipe(take(3));
+// }
 
-// merge() → Merges multiple Observables concurrently.
-merge(of(1, 2), of(3, 4)).subscribe(console.log); // 1, 2, 3, 4
+// 4. Merge → Fetch users and posts simultaneously
+// getUsersAndPosts(): Observable<any> {
+//   const users$ = this.http.get(`${this.API_URL}/users`);
+//   const posts$ = this.http.get(`${this.API_URL}/posts`);
+//   return merge(users$, posts$);
+// }
 
-// concat() → Concatenates Observables sequentially.
-concat(of(1, 2), of(3, 4)).subscribe(console.log); // 1, 2, 3, 4
+// 5. Concat → First login, then fetch user details
+// loginAndGetUser(): Observable<any> {
+//   const login$ = this.http.post(`${this.API_URL}/posts`, { username: 'test' });
+//   const userDetails$ = this.http.get(`${this.API_URL}/users/1`);
+//   return concat(login$, userDetails$);
+// }
+
+// 1. switchMap → Cancels previous request if a new one starts
+// searchUser(userId: number): Observable<any> {
+//   return this.http.get(`${this.API_URL}/users/${userId}`).pipe(
+//     switchMap(user => this.http.get(`${this.API_URL}/posts?userId=${userId}`)) // Fetch posts of the searched user
+//   );
+// }
+
+// 2. mergeMap → Runs multiple API calls in parallel
+// getUserPostsParallel(userIds: number[]): Observable<any> {
+//   return this.http.get<any[]>(`${this.API_URL}/users`).pipe(
+//     mergeMap(users => {
+//       const requests = userIds.map(id => this.http.get(`${this.API_URL}/posts?userId=${id}`));
+//       return requests.length ? requests[0] : [];
+//     })
+//   );
+// }
+
+// 3. concatMap → Runs API calls sequentially
+// getUserPostsSequential(userIds: number[]): Observable<any> {
+//   return this.http.get<any[]>(`${this.API_URL}/users`).pipe(
+//     concatMap(users => {
+//       const requests = userIds.map(id => this.http.get(`${this.API_URL}/posts?userId=${id}`).pipe(delay(1000))); // Simulating delay
+//       return requests.length ? requests[0] : [];
+//     })
+//   );
+// }
 
 // 🚨 Difference Between switchMap(), mergeMap(), and concatMap()
 // Operator	        Cancels Previous	Concurrent Requests     	Use Case

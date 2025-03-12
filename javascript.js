@@ -8,6 +8,21 @@ function debounce(func, wait) {
   };
 }
 
+function throttle(mainFunction, delay) {
+  let timerFlag = null; // Variable to keep track of the timer
+  // Returning a throttled version
+  return (...args) => {
+    if (timerFlag === null) {
+      // If there is no timer currently running
+      mainFunction(...args); // Execute the main function
+      timerFlag = setTimeout(() => {
+        // Set a timer to clear the timerFlag after the specified delay
+        timerFlag = null; // Clear the timerFlag to allow the main function to be executed again
+      }, delay);
+    }
+  };
+}
+
 // convert a normal funtion to a curried one
 function curry(fn) {
   return function curried(...args) {
@@ -330,3 +345,14 @@ function undefinedToNull(input) {
 // Tilde (~):
 // Use for critical dependencies where even minor version changes might introduce
 // risk or unexpected behavior.
+Hi,
+
+I’m a Frontend Developer with 6+ years of experience in JavaScript, HTML, CSS, Angular, and React.js. I’ve contributed to projects like warehouse management system and a car booking platform. I’d be grateful if you can provide the referral for the relevant position.
+
+Job - https://www.smartrecruiters.com/Nexthink/744000044214558
+
+Best regards,
+Deepak Jain
+8178238604
+deepak.jain2200@gmail.com
+resume - https://drive.google.com/file/d/1FKHjgUywirwAa4-V4iveQU0UDkeDL15k/view?usp=sharing

@@ -7,9 +7,9 @@ import MouseFollow from "./template/customHook.js/mouseFollow/mouseFollow";
 import HomeTab from "./template/customHook.js/formTabs/homeTab";
 
 export default function Home() {
-  return <HomeTab />;
+  // return <HomeTab />;
   // return <MouseFollow />;
-  // return <Hook />;
+  return <Hook />;
   // return <HOC />;
   // return <New />;
 }

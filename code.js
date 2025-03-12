@@ -116,7 +116,7 @@ var mergeTwoLists = function (list1, list2) {
 };
 
 //remove nth node from end from linked list
-// 1) move head to end position
+// 1) move head to nth position
 // 2) again move both head and dummy till head is null
 // 3) this will ensure dummy node is at the position before the node that needs to be removed
 var removeNthFromEnd = function (head, n) {
@@ -142,7 +142,7 @@ var copyRandomList = function (head) {
   // map for storing all the nodes
   let map = new Map();
 
-  // to return of value is null else it will return undefiend
+  // to return if value is null else it will return undefiend
   map.set(null, null);
   while (curr) {
     // creat a new node for each node and put in map
@@ -162,6 +162,33 @@ var copyRandomList = function (head) {
     curr = curr.next;
   }
   return map.get(head);
+};
+
+var lca = function (root, p, q) {
+  if (!root) return null;
+  if (root.val === p.val || root.val === q.val) {
+    return root;
+  }
+  left = lca(root.left, p, q);
+  right = lca(root.right, p, q);
+  if (!left) return right;
+  if (!right) return left;
+  return root;
+};
+
+var lowestCommonAncestorBST = function (root, p, q) {
+  // If both p and q are greater than root's value, LCA must be in the right subtree
+  if (p.val > root.val && q.val > root.val) {
+    return lowestCommonAncestorBST(root.right, p, q);
+  }
+  // If both p and q are smaller than root's value, LCA must be in the left subtree
+  else if (p.val < root.val && q.val < root.val) {
+    return lowestCommonAncestorBST(root.left, p, q);
+  }
+  // If p and q are on different sides or one of them is the root itself, root is the LCA
+  else {
+    return root;
+  }
 };
 
 // Clone Graph
@@ -185,11 +212,9 @@ var cloneGraph = function (node) {
     // return that nodes object
     return map[nodal.val];
   };
-  let clone;
-  if (typeof node == "object" && node) {
-    clone = rec(node);
+  if (node) {
+    return rec(node);
   }
-  return clone;
 };
 
 // Course Schedule
@@ -292,22 +317,34 @@ var rob = function (nums) {
   }
 };
 
+//if houses are circular
+// remove first or last house and check max
+if (nums.length < 3) {
+  result = robber(nums);
+} else {
+  result = max(robber(nums.slice(0, -1)), robber(nums.slice(1)));
+}
+
 // Longest Palindrome
 var longestPalindrome = function (s) {
-  let longest = s[0];
-  l = s.length - 1;
-  function expand(left, right, temp = "") {
-    while (right < l + 1 && left >= 0 && s[left] == s[right]) {
-      temp = s[left] + temp + s[right];
-      right++;
-      left--;
+  let longest = s[0]; // Initialize with the first character
+  const l = s.length;
+  function expand(start, end) {
+    while (start >= 0 && end < l && s[start] === s[end]) {
+      start--;
+      end++;
     }
-    if (temp.length > longest.length) longest = temp;
+    // After the loop, the palindrome is from start+1 to end-1
+    const currentPalindrome = s.slice(start + 1, end);
+    if (currentPalindrome.length > longest.length) {
+      longest = currentPalindrome;
+    }
   }
-  for (let i = 1; i < l + 1; i++) {
-    expand(i - 1, i);
-    expand(i - 1, i + 1, s[i]);
+  for (let i = 0; i < l; i++) {
+    expand(i, i); // Odd length palindromes
+    expand(i, i + 1); // Even length palindromes
   }
+
   return longest;
 };
 
@@ -394,4 +431,22 @@ var longestCommonSubsequence = function (text1, text2) {
     }
   }
   return memo[m][n];
+};
+
+var diameterOfBinaryTree = function (root) {
+  let diameter = 0; // Variable to store the maximum diameter
+
+  function depth(node) {
+    if (!node) return 0; // Base case: if the node is null, return 0
+    // Recursively calculate the depth of the left and right subtrees
+    const leftDepth = depth(node.left);
+    const rightDepth = depth(node.right);
+    // Update the diameter if the current path is longer
+    diameter = Math.max(diameter, leftDepth + rightDepth);
+    // Return the depth of the current node
+    return Math.max(leftDepth, rightDepth) + 1;
+  }
+
+  depth(root); // Start the depth calculation
+  return diameter; // Return the computed diameter
 };
